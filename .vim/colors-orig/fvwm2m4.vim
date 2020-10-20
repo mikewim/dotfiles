@@ -1,0 +1,1 @@
+/usr/share/vim/vim81/syntax/fvwm2m4.vim
