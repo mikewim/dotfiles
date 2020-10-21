@@ -1,1 +1,0 @@
-/usr/share/vim/vim81/syntax/snobol4.vim

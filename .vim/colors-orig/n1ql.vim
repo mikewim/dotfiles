@@ -1,1 +1,0 @@
-/usr/share/vim/vim81/syntax/n1ql.vim
