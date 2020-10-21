@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/michaelwimberley/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -68,7 +68,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git docker kubectl kops)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -101,15 +101,4 @@ source $ZSH/oh-my-zsh.sh
 
 # enable vim in termian
 bindkey -v
-
-# bring helm v2 into path
-export PATH="$PATH:/usr/local/opt/helm@2/bin"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-export AWS_PROFILE=mikewim-dev
-export GOPATH=/Users/michaelwimberley/go
-export PATH="$PATH:/Users/michaelwimberley/go/bin"
 
