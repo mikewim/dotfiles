@@ -14,9 +14,9 @@ set visualbell noerrorbells                " don't beep
 set sw=4 " shift width used for < and > tabs space
 set tabstop=4 shiftwidth=4 softtabstop=4
 set list lcs=tab:\|\ 
+set background=dark
 
 syntax enable 
-set background=dark
 
 "highlight
 nnoremap <Leader>h :exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))<cr>
@@ -35,25 +35,38 @@ nnoremap k gk
 nnoremap B ^
 nnoremap E $
 
-" toggle gundo (graphical display of undo tree)
-nnoremap <leader>u :GundoToggle<CR>
-
 " easier escape
-inoremap jk <Esc>l
+inoremap jk <Esc>
 
-" PLUGIN CONFIGS
+" ------------------- PLUGIN CONFIGS ---------------------
 
 " color scheme
-" colorscheme gruvbox
-packadd! dracula
-colorscheme dracula
+colorscheme gruvbox
+" packadd! dracula
+" colorscheme dracula
+"
+" open nerdtree automatically only if directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+
+" syntastic 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
 
+" rainbow parens
 let g:rainbow_active = 1
 
-let g:go_fmt_fail_silently = 1
+" vim-go
 let g:go_list_type = "quickfix"
 let g:go_auto_sameids = 0
 let g:go_metalinter_autosave_enabled = []
@@ -79,31 +92,19 @@ let g:go_fmt_experimental = 1
 let g:go_echo_command_info=0
 let g:go_highlight_diagnostic_errors = 0
 let g:go_highlight_diagnostic_warnings = 0
+let g:go_highlight_structs = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_types = 1
 
-" let g:ale_linters = {'go': ['gobuild']}
-"let g:ale_linters = {'go': ['govet', 'gobuild', 'gopls']}
-"let g:ale_fixers  = {'go': ['trim_whitespace', 'goimports','gofmt']}
-"let g:ale_fix_on_save = 1
-"" Only run linters named in ale_linters settings.
-"let g:ale_linters_explicit = 1
-"let g:ale_lint_on_insert_leave = 0
-"" You can disable this option too
-"" if you don't want linters to run on opening a file
-"let g:ale_lint_on_enter = 0
-"" highlight link ALEErrorLine Error
-"highlight link ALEError Error
-"highlight link ALEInfo Error
-"highlight link ALEStyleError  Error
-"highlight link ALEStyleWarning Error
-"highlight link ALEVirtualTextError Error
-"highlight link ALEVirtualTextInfo Error
-"highlight link ALEVirtualTextStyleError Error
-"highlight link ALEVirtualTextStyleWarning Error
-"highlight link ALEVirtualTextWarning Error
-"highlight clear ALEWarning
-"
+autocmd BufWritePost *.go call GoOnSave()
+function GoOnSave()
+	:GoBuild
+	:GoMetaLinter
+	:GoFmt
+endfunction
 
-
-" open nerdtree automatically only if directory
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+" Rust support
+let g:rustfmt_autosave = 1
